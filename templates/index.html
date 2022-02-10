@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <title>Main</title>
+    <style>
+        * {
+            font-family: Roboto;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        input {
+            min-width: 25rem;
+            min-height: 3rem;
+            border-radius: 20px;
+            font-size: 2rem;
+        }
+
+        button {
+            border: none;
+            margin-left: 3rem;
+            background: #f54642;
+            min-width: 20rem;
+            min-height: 3rem;
+            font-size: 2rem;
+            margin-top: 20px;
+            border-radius: 20rem;
+            color: white;
+            font-weight: bolder;
+        }
+
+        button:hover {
+            background-color: #f22a27;
+        }
+
+        .form {
+            padding-top: 3rem;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .container {
+            margin: 5rem;
+            padding-top: 2rem;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5), 0 20px 20px rgba(0, 0, 0, 0.5);
+            width: 50%;
+            height: 75vh;
+            border-radius: 5rem;
+
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            padding-top: 10rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="heading">
+        <h1>Plugin Test</h1>
+    </div>
+    <div class="form">
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder=" Plugin Name" name="plugin">
+            <br>
+            <button type="submit">Add Plugin</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
