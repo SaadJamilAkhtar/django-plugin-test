@@ -7,8 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <title>Main</title>
     <style>
+
+        h1{
+            font-size: 3rem;
+        }
+
         * {
-            font-family: Roboto;
+            font-family: Roboto, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -67,6 +72,7 @@
             align-content: center;
             padding-top: 10rem;
         }
+
     </style>
 </head>
 <body>
@@ -81,6 +87,9 @@
             <br>
             <button type="submit">Add Plugin</button>
         </form>
+    </div>
+    <div class="data">
+        {{ data}}
     </div>
 </div>
 </body>
