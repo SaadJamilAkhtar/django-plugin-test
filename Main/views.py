@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .signals import add_plugin
 from DynamicDBUpdate.settings import load_plugin
 from .forms import *
+import zipfile
 
 
 def index(request):
@@ -15,6 +16,8 @@ def upload(request):
     if request.POST:
         form = PluginForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            plugin = form.save()
+            with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
+                zip_ref.extractall('plugins/')
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
