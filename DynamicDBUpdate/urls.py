@@ -24,6 +24,8 @@ urlpatterns = [
     path('', index)
 ]
 
+urlpatterns.append(path("plugin1/", include("plugins._plugin.urls")))
+
 
 @receiver(plugin_loaded)
 def load_urls(sender, **kwargs):

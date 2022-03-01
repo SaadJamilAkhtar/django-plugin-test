@@ -19,8 +19,9 @@ plugin_loaded = django.dispatch.Signal()
 
 # plugin addition
 def load_plugin(name):
-    INSTALLED_APPS.append(name)
-    plugin_loaded.send(sender=name)
+    if not name in INSTALLED_APPS:
+        INSTALLED_APPS.append(name)
+        plugin_loaded.send(sender=name)
     return INSTALLED_APPS
 
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Main',
+    'plugins._plugin'
 ]
 
 MIDDLEWARE = [
