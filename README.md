@@ -18,6 +18,8 @@ Adding plugins placed within a python package
 # Test 3 (Success)
 Uploading plugins (zipped) to required directory
 
+# Test 4 (Success)
+Unzip installed plugins to required directory
 ___
 ` In Progress `
 
