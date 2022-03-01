@@ -15,6 +15,9 @@ First successful plugin integration test
 # Test 2 (Success)
 Adding plugins placed within a python package
 
-=======
+# Test 3 (Success)
+Uploading plugins (zipped) to required directory
+
+___
 ` In Progress `
 
