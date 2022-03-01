@@ -21,7 +21,8 @@ from .settings import plugin_loaded
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index)
+    path('', index),
+    path('upload', upload)
 ]
 
 urlpatterns.append(path("plugin1/", include("plugins._plugin.urls")))
