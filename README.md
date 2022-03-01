@@ -10,3 +10,6 @@ First successful plugin integration test
 2. load_plugin() takes plugin name as argument
 3. load_plugin add Django app (Plugin) to INSTALLED_APPS list and launch a plugin_loaded signal
 4. plugin_loaded signal is received by urls.py and urls file of loaded plugin is added to main urls
+=======
+` In Progress `
+
