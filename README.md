@@ -23,6 +23,9 @@ Unzip installed plugins to required directory
 
 # Test 5 (Pending... [Status failure])
 add plugin code to application
+
+## Test 5 update ( [status success])
+Added code dynamically to application through plugins
 ___
 ` In Progress `
 
