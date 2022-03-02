@@ -20,6 +20,9 @@ Uploading plugins (zipped) to required directory
 
 # Test 4 (Success)
 Unzip installed plugins to required directory
+
+# Test 5 (Pending... [Status failure])
+add plugin code to application
 ___
 ` In Progress `
 
