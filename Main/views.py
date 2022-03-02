@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render
 from .signals import add_plugin
 from DynamicDBUpdate.settings import load_plugin
@@ -19,5 +21,6 @@ def upload(request):
             plugin = form.save()
             with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
                 zip_ref.extractall('plugins/')
+                load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})

@@ -25,9 +25,7 @@ urlpatterns = [
     path('upload', upload)
 ]
 
-urlpatterns.append(path("plugin1/", include("plugins._plugin.urls")))
-
 
 @receiver(plugin_loaded)
 def load_urls(sender, **kwargs):
-    urlpatterns.append(path(str(sender).lower() + "/", include(str(sender) + ".urls")))
+    urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls")))
