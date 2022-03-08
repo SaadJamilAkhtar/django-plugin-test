@@ -29,3 +29,6 @@ urlpatterns = [
 @receiver(plugin_loaded)
 def load_urls(sender, **kwargs):
     urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls")))
+
+
+mountPlugins()

@@ -24,3 +24,10 @@ def upload(request):
                 load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
+
+
+def mountPlugins():
+    plugins = Plugin.objects.all()
+    for plugin in plugins:
+        if plugin.active:
+            load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
