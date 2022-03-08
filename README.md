@@ -29,6 +29,9 @@ Added code dynamically to application through plugins
 
 ## Test 6
 mounting plugin on server startup complete
+
+## Test 7 (Pending... [Status failure])
+mounting and unmounting plugin
 ___
 ` In Progress `
 
