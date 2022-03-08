@@ -21,15 +21,15 @@ plugin_unloaded = django.dispatch.Signal()
 # plugin addition
 def load_plugin(name):
     if not name in INSTALLED_APPS:
-        INSTALLED_APPS.append('plugins.' + name)
+        INSTALLED_APPS.append(PLUGIN_DIRECTORY + "." + name)
         plugin_loaded.send(sender=name)
     return INSTALLED_APPS
 
 
 def unload_plugin(name):
     if name in INSTALLED_APPS:
-        INSTALLED_APPS.remove('plugins.' + name)
-        plugin_unloaded.send(sender=name)
+        INSTALLED_APPS.remove(name)
+        plugin_unloaded.send(sender=name.split(".")[1].strip())
     return INSTALLED_APPS
 
 
@@ -138,3 +138,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PLUGIN_DIRECTORY = 'plugins'

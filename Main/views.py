@@ -5,6 +5,7 @@ from .signals import add_plugin
 from DynamicDBUpdate.settings import load_plugin, unload_plugin
 from .forms import *
 import zipfile
+from django.conf import settings
 
 
 def index(request):
@@ -20,7 +21,7 @@ def upload(request):
         if form.is_valid():
             plugin = form.save()
             with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
-                zip_ref.extractall('plugins/')
+                zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
                 load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
@@ -54,13 +55,8 @@ def toggleEnable(request, id):
                 if toggle:
                     load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
                 else:
-                    print('to remove')
-                    name = 'plugins.' + str(os.path.basename(plugin.file.name)).split('.')[0]
-                    print(name)
-                    arr = unload_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
-                    print(arr)
-                    print(arr[-1] == name)
-                    print(arr.index(name))
+                    name = f'{settings.PLUGIN_DIRECTORY}.' + str(os.path.basename(plugin.file.name)).split('.')[0]
+                    unload_plugin(name)
 
     data = {
         'form': EnableForm(instance=plugin)

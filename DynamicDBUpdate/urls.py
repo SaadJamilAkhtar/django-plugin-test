@@ -30,12 +30,14 @@ urlpatterns = [
 
 @receiver(plugin_loaded)
 def load_urls(sender, **kwargs):
-    urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls")))
+    urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls"), name=sender))
 
 
 @receiver(plugin_unloaded)
-def load_urls(sender, **kwargs):
-    urlpatterns.remove(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls")))
+def unload_urls(sender, **kwargs):
+    for url in urlpatterns:
+        if str(url.pattern).strip() == (str(sender).lower() + "/"):
+            urlpatterns.remove(url)
 
 
 mountPlugins()
