@@ -32,6 +32,9 @@ mounting plugin on server startup complete
 
 ## Test 7 (Pending... [Status failure])
 mounting and unmounting plugin
+
+## Test 7 ([Status Pass])
+mounting and unmounting plugin
 ___
 ` In Progress `
 
