@@ -26,6 +26,9 @@ add plugin code to application
 
 ## Test 5 update ( [status success])
 Added code dynamically to application through plugins
+
+## Test 6
+mounting plugin on server startup complete
 ___
 ` In Progress `
 
