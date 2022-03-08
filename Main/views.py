@@ -1,11 +1,11 @@
 import os
 
 from django.shortcuts import render, redirect
-from .signals import add_plugin
 from DynamicDBUpdate.settings import load_plugin, unload_plugin
 from .forms import *
 import zipfile
 from django.conf import settings
+from .utils import *
 
 
 def index(request):
@@ -19,19 +19,19 @@ def upload(request):
     if request.POST:
         form = PluginForm(request.POST, request.FILES)
         if form.is_valid():
-            plugin = form.save()
-            with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
-                zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
-                load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
+            checkPlugin(form)
+            if checkPlugin(form):
+                plugin = form.save()
+                with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
+                    filenames = zip_ref.namelist()
+                    plugin.filename = filenames[0]
+                    plugin.save()
+                    zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
+                    if checkForTemplates(filenames):
+                        loadTemplates(plugin)
+                    load_plugin(str(os.path.basename(plugin.filename)).split('.')[0])
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
-
-
-def mountPlugins():
-    plugins = Plugin.objects.all()
-    for plugin in plugins:
-        if plugin.active:
-            load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
 
 
 def allPlugins(request):
@@ -53,9 +53,9 @@ def toggleEnable(request, id):
             toggle = form.cleaned_data.get('active')
             if not toggle is None:
                 if toggle:
-                    load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
+                    load_plugin(str(os.path.basename(plugin.filename)).split('.')[0])
                 else:
-                    name = f'{settings.PLUGIN_DIRECTORY}.' + str(os.path.basename(plugin.file.name)).split('.')[0]
+                    name = f'{settings.PLUGIN_DIRECTORY}.' + str(os.path.basename(plugin.filename)).split('.')[0]
                     unload_plugin(name)
 
     data = {

@@ -18,6 +18,7 @@ from django.dispatch import receiver
 from django.urls import path, include
 from Main.views import *
 from .settings import plugin_loaded, plugin_unloaded
+from Main.utils import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +31,10 @@ urlpatterns = [
 
 @receiver(plugin_loaded)
 def load_urls(sender, **kwargs):
-    urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls"), name=sender))
+    try:
+        urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls"), name=sender))
+    except:
+        pass
 
 
 @receiver(plugin_unloaded)
