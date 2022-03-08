@@ -35,6 +35,9 @@ mounting and unmounting plugin
 
 ## Test 7 ([Status Pass])
 mounting and unmounting plugin
+
+## Test 8 
+add plugin templates to application
 ___
 ` In Progress `
 
