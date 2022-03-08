@@ -15,6 +15,7 @@ import django.dispatch
 
 #
 plugin_loaded = django.dispatch.Signal()
+plugin_unloaded = django.dispatch.Signal()
 
 
 # plugin addition
@@ -22,6 +23,13 @@ def load_plugin(name):
     if not name in INSTALLED_APPS:
         INSTALLED_APPS.append('plugins.' + name)
         plugin_loaded.send(sender=name)
+    return INSTALLED_APPS
+
+
+def unload_plugin(name):
+    if name in INSTALLED_APPS:
+        INSTALLED_APPS.remove('plugins.' + name)
+        plugin_unloaded.send(sender=name)
     return INSTALLED_APPS
 
 

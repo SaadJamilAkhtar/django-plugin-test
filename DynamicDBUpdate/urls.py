@@ -17,18 +17,25 @@ from django.contrib import admin
 from django.dispatch import receiver
 from django.urls import path, include
 from Main.views import *
-from .settings import plugin_loaded
+from .settings import plugin_loaded, plugin_unloaded
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('upload', upload)
+    path('upload', upload),
+    path('all/', allPlugins),
+    path('plugin/<int:id>', toggleEnable, name='toggle'),
 ]
 
 
 @receiver(plugin_loaded)
 def load_urls(sender, **kwargs):
     urlpatterns.append(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls")))
+
+
+@receiver(plugin_unloaded)
+def load_urls(sender, **kwargs):
+    urlpatterns.remove(path(str(sender).lower() + "/", include('plugins.' + str(sender) + ".urls")))
 
 
 mountPlugins()
