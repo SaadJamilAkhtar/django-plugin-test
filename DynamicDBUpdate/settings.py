@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 import django.dispatch
 
@@ -20,7 +20,7 @@ plugin_unloaded = django.dispatch.Signal()
 
 # plugin addition
 def load_plugin(name):
-    if not name in INSTALLED_APPS:
+    if not PLUGIN_DIRECTORY + "." + name in INSTALLED_APPS:
         INSTALLED_APPS.append(PLUGIN_DIRECTORY + "." + name)
         plugin_loaded.send(sender=name)
     return INSTALLED_APPS

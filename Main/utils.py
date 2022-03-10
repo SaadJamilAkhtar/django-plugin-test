@@ -12,7 +12,7 @@ def mountPlugins():
     plugins = Plugin.objects.all()
     for plugin in plugins:
         if plugin.active:
-            load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0])
+            print(load_plugin(str(os.path.basename(plugin.file.name)).split('.')[0]))
 
 
 # Check if plugin already exists in the system

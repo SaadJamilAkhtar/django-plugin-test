@@ -23,9 +23,10 @@ from Main.utils import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('upload', upload),
+    path('upload', upload, name='add'),
     path('all/', allPlugins),
     path('plugin/<int:id>', toggleEnable, name='toggle'),
+    path('migrate', runMigrations)
 ]
 
 

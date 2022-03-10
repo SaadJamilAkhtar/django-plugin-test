@@ -1,6 +1,8 @@
 import os
 
 from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from DynamicDBUpdate.settings import load_plugin, unload_plugin
 from .forms import *
 import zipfile
@@ -19,7 +21,6 @@ def upload(request):
     if request.POST:
         form = PluginForm(request.POST, request.FILES)
         if form.is_valid():
-            checkPlugin(form)
             if checkPlugin(form):
                 plugin = form.save()
                 with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
@@ -29,7 +30,7 @@ def upload(request):
                     zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
                     if checkForTemplates(filenames):
                         loadTemplates(plugin)
-                    load_plugin(str(os.path.basename(plugin.filename)).split('.')[0])
+                    print(load_plugin(plugin.filename.replace("/", "")))
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
 
@@ -53,12 +54,18 @@ def toggleEnable(request, id):
             toggle = form.cleaned_data.get('active')
             if not toggle is None:
                 if toggle:
-                    load_plugin(str(os.path.basename(plugin.filename)).split('.')[0])
+                    load_plugin(plugin.filename.replace("/", ""))
                 else:
-                    name = f'{settings.PLUGIN_DIRECTORY}.' + str(os.path.basename(plugin.filename)).split('.')[0]
+                    name = f'{settings.PLUGIN_DIRECTORY}.' + plugin.filename
                     unload_plugin(name)
 
     data = {
         'form': EnableForm(instance=plugin)
     }
     return render(request, 'enableForm.html', data)
+
+
+def runMigrations(request):
+    cmd = 'python manage.py migrate plugins.modelPlugin'
+    os.system(cmd)
+    return redirect(reverse('add'))
