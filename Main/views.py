@@ -8,6 +8,7 @@ from .forms import *
 import zipfile
 from django.conf import settings
 from .utils import *
+import json
 
 
 def index(request):
@@ -26,9 +27,11 @@ def upload(request):
                 plugin = form.save()
                 with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
                     filenames = zip_ref.namelist()
-                    plugin.filename = filenames[0]
-                    plugin.save()
                     zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
+                    plugin.filename = filenames[0]
+                    config = json.load(open(f'{settings.PLUGIN_DIRECTORY}/config.json'))
+                    print(config)
+                    plugin.save()
                     print(load_plugin(plugin.filename.replace("/", "")))
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
