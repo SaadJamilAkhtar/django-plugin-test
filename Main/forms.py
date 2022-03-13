@@ -5,7 +5,7 @@ from .models import *
 class PluginForm(forms.ModelForm):
     class Meta:
         model = Plugin
-        fields = '__all__'
+        fields = ['file']
         exclude = ['filename']
 
 

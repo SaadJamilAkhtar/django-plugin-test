@@ -15,4 +15,6 @@ class Plugin(models.Model):
         return self.filename + self.entry
 
     def __str__(self):
-        return self.name
+        if self.name:
+            return self.name
+        return "Plugin -- Unnamed"

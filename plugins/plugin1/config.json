@@ -1,0 +1,8 @@
+{
+  "name": "Plugin1",
+  "author": "Muhammad Saad Jamil",
+  "version": "1.0",
+  "deps": "",
+  "python deps": ["django"],
+  "entry": "main/"
+}

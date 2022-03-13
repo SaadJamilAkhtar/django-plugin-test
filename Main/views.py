@@ -23,15 +23,18 @@ def upload(request):
         form = PluginForm(request.POST, request.FILES)
         if form.is_valid():
             if checkPlugin(form):
-                print("good to go")
                 plugin = form.save()
                 with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
                     filenames = zip_ref.namelist()
                     zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
                     plugin.filename = filenames[0]
-                    config = json.load(open(f'{settings.PLUGIN_DIRECTORY}/config.json'))
-                    print(config)
+                    config = json.load(open(f'{settings.PLUGIN_DIRECTORY}/{plugin.filename}config.json', 'r'))
+                    plugin.name = config['name']
+                    plugin.author = config['author']
+                    plugin.version = config['version']
+                    plugin.entry = config['entry']
                     plugin.save()
+                    print(plugin.getEntryPoint())
                     print(load_plugin(plugin.filename.replace("/", "")))
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
