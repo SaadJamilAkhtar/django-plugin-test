@@ -38,6 +38,9 @@ mounting and unmounting plugin
 
 ## Test 8 
 add plugin templates to application
+
+## Test 9 
+add config file in plugins
 ___
 ` In Progress `
 
