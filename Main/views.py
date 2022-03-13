@@ -22,14 +22,13 @@ def upload(request):
         form = PluginForm(request.POST, request.FILES)
         if form.is_valid():
             if checkPlugin(form):
+                print("good to go")
                 plugin = form.save()
                 with zipfile.ZipFile(plugin.file, 'r') as zip_ref:
                     filenames = zip_ref.namelist()
                     plugin.filename = filenames[0]
                     plugin.save()
                     zip_ref.extractall(f'{settings.PLUGIN_DIRECTORY}/')
-                    if checkForTemplates(filenames):
-                        loadTemplates(plugin)
                     print(load_plugin(plugin.filename.replace("/", "")))
     form = PluginForm()
     return render(request, 'upload.html', {'form': form})
