@@ -55,3 +55,16 @@ def checkConfig(files):
         if "config.json" in name:
             return True
     return False
+
+
+# Check if plugin require python deps
+def checkPythonDeps(data):
+    if len(data['python deps']) > 0:
+        return True
+    return False
+
+
+def installPythonDeps(data):
+    if checkPythonDeps(data):
+        for dep in data['python deps']:
+            os.system(f"pip install {dep}")
